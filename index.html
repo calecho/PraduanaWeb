@@ -327,6 +327,10 @@
             display:none;
         }
 
+        .contacto-movil{
+            display:none;
+        }
+
         .nav-central{
             flex:1;
         }
@@ -707,6 +711,21 @@
                 width:auto;
             }
 
+            .contacto-movil{
+                display:block;
+                flex:none;
+                padding:12px 8px;
+                color:#fff;
+                text-decoration:none;
+                font-size:13px;
+                font-weight:600;
+                white-space:nowrap;
+            }
+
+            .contacto-movil:hover{
+                color:#f5b942;
+            }
+
             .nav-central{
                 display:none;
                 position:absolute;
@@ -733,6 +752,10 @@
             nav ul li{
                 width:100%;
                 margin:0;
+            }
+
+            nav ul li:last-child{
+                display:none;
             }
 
             nav ul li a{
@@ -817,6 +840,8 @@
                     </form>
                 </div>
             </div>
+
+            <a class="contacto-movil" href="#contacto">Contáctanos</a>
 
             <ul class="nav-central">
                 <li><a href="#inicio">Inicio</a></li>
