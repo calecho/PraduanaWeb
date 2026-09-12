@@ -175,6 +175,10 @@
             justify-content:start;
         }
 
+        .imagenes:has(.mensaje-vacio){
+            display:block;
+        }
+
         .card{
             background:rgba(255,255,255,0.12);
             border:1px solid rgba(255,255,255,0.18);
@@ -412,6 +416,7 @@
 
         .mensaje-vacio{
             grid-column:1 / -1;
+            width:100%;
             text-align:center;
             color:#cfcfcf;
             font-size:18px;
