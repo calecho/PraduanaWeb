@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicación - PRADUANA</title>
+    <style>
+        *{box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+        body{margin:0;background:#111;color:#fff;line-height:1.6}
+        header{padding:22px;text-align:center;background:linear-gradient(90deg,#8b1e14,#d94a2b,#f5b942);box-shadow:0 4px 12px #0006}
+        header a{color:#fff;text-decoration:none;font-size:28px;font-weight:700;letter-spacing:2px}
+        .contenedor{width:900px;max-width:92%;margin:40px auto 80px}
+        .galeria{width:min(100%,760px);aspect-ratio:16/10;margin:auto;background:#080808;border-radius:18px;overflow:hidden;box-shadow:0 14px 30px #0008}
+        .galeria img{width:100%;height:100%;object-fit:contain;display:block}
+        .info{background:#ffffff14;border:1px solid #ffffff26;border-radius:16px;padding:30px;margin-top:30px}
+        h1{color:#ffd37a;font-size:30px;margin:0 0 10px}.detalle{font-size:18px;color:#f2f2f2;margin:8px 0}.precio{color:#ffd37a;font-size:24px;font-weight:700}
+        .vendedor,.volver{color:#ffd37a}.vendedor{display:inline-block;margin:12px 0 20px}.descripcion{color:#e2e2e2;margin:22px 0}
+        .estado{color:#7ee2a8;font-weight:700}.btn{display:inline-block;background:#25d366;color:#0f0f0f;font-weight:700;padding:14px 28px;border-radius:30px;text-decoration:none}
+        .no-encontrada{text-align:center;padding:80px 0;font-size:20px}.no-encontrada a{color:#ffd37a}
+    </style>
+</head>
+<body>
+    <header><a href="index.html">PRADUANA</a></header>
+    <main class="contenedor" id="contenido"></main>
+    <script src="datos-demo.js"></script>
+    <script>
+        const publicacion = obtenerPublicacionDemo(new URLSearchParams(window.location.search).get('id'));
+        const contenido = document.getElementById('contenido');
+        if (!publicacion) {
+            contenido.innerHTML = '<div class="no-encontrada"><p>Esta publicación ya no está disponible.</p><a href="index.html#ganado">Volver a PRADUANA</a></div>';
+        } else {
+            document.title = `${publicacion.nombre} - PRADUANA`;
+            contenido.innerHTML = `
+                <div class="galeria"><img src="${publicacion.imagen}" alt="${publicacion.nombre}"></div>
+                <section class="info">
+                    <h1>${publicacion.nombre}</h1>
+                    <p class="detalle">${publicacion.peso} kg · ${publicacion.ubicacion}</p>
+                    <p class="detalle">${publicacion.raza} · ${publicacion.genero} · ${publicacion.edad} meses</p>
+                    <p class="precio">$${formatoPrecioDemo(publicacion.precio)} COP</p>
+                    <a class="vendedor" href="perfil.html?id=${publicacion.usuario_id}">Publicado por ${publicacion.usuario_nombre} · Ver perfil</a>
+                    <p class="estado">✓ Ejemplar disponible</p>
+                    <p class="descripcion">${publicacion.descripcion}</p>
+                    <a class="btn" target="_blank" rel="noopener" href="https://wa.me/${publicacion.whatsapp}?text=${encodeURIComponent(`Hola, estoy interesado en ${publicacion.nombre} publicado en PRADUANA.`)}">Contactar por WhatsApp</a>
+                </section>
+                <p><a class="volver" href="index.html#ganado">← Volver a PRADUANA</a></p>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es/us">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -847,13 +847,13 @@
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#quienes-somos">Quiénes somos</a></li>
                 <li><a href="#ganado">Ganado</a></li>
-                <li><a href="publicar_form.php">Publicar</a></li>
+                <li><a href="#contacto">Publicar</a></li>
                 <li><a href="#contacto">Contáctanos</a></li>
             </ul>
             <div>
-                <a class="enlace-perfil oculto" id="enlace-perfil" href="perfil.php" title="Ver mi perfil" aria-label="Ver mi perfil">&#128100;</a>
-                <button class="btn-registro" id="abrir-registro" type="button">Registrarse</button>
-                <button class="btn-registro btn-login" id="abrir-login" type="button">Iniciar sesión</button>
+                <a class="enlace-perfil" id="enlace-perfil" href="perfil.html?id=1" title="Ver perfil de muestra" aria-label="Ver perfil de muestra">&#128100;</a>
+                <button class="btn-registro oculto" id="abrir-registro" type="button">Registrarse</button>
+                <button class="btn-registro btn-login oculto" id="abrir-login" type="button">Iniciar sesión</button>
                 <a class="btn-registro oculto" id="cerrar-sesion" href="cerrar_sesion.php">Cerrar sesión</a>
             </div>
         </div>
@@ -870,7 +870,7 @@
 
             <div class="botones">
                 <a href="#ganado" class="btn btn-principal">Ver ganado</a>
-                <a href="publicar_form.php" class="btn btn-secundario">Publicar ganado</a>
+                <a href="#contacto" class="btn btn-secundario">Publicar ganado</a>
             </div>
         </section>
 
@@ -944,6 +944,7 @@
         </div>
     </div>
 
+    <script src="datos-demo.js"></script>
     <script>
         const modal = document.getElementById('modal-registro');
         const abrirRegistro = document.getElementById('abrir-registro');
@@ -1080,8 +1081,7 @@
 
         function crearTarjetaGanado(pub, contenedorId, alPrincipio) {
             const enlace = document.createElement('a');
-            enlace.href = 'publicacion.php?id=' + encodeURIComponent(pub.id);
-            enlace.target = '_blank';
+            enlace.href = 'publicacion.html?id=' + encodeURIComponent(pub.id);
             enlace.className = 'card-link';
 
             enlace.innerHTML = `
@@ -1112,40 +1112,14 @@
             mensaje.style.display = hayTarjetas ? 'none' : 'block';
         }
 
-        function cargarPublicaciones() {
-            fetch('listar_publicaciones.php')
-                .then(res => res.json())
-                .then(data => {
-                    if (data.exito) {
-                        data.publicaciones.forEach(pub => crearTarjetaGanado(pub, 'lista-ganado', false));
-                    }
-                    actualizarMensajeVacio();
-                })
-                .catch(() => {
-                    console.warn('No se pudieron cargar las publicaciones guardadas.');
-                });
-        }
-
-        cargarPublicaciones();
+        publicacionesDemo.forEach(pub => crearTarjetaGanado(pub, 'lista-ganado', false));
+        actualizarMensajeVacio();
 
         if (window.location.hash === '#registro') {
             modal.classList.add('activo');
         }
 
         const enlacePerfil = document.getElementById('enlace-perfil');
-        fetch('sesion.php')
-            .then(res => res.json())
-            .then(data => {
-                if (data.autenticado) {
-                    enlacePerfil.href = 'perfil.php?id=' + encodeURIComponent(data.usuario.id);
-                    enlacePerfil.title = 'Ver mi perfil';
-                    enlacePerfil.classList.remove('oculto');
-                    abrirRegistro.classList.add('oculto');
-                    abrirLogin.classList.add('oculto');
-                    cerrarSesion.classList.remove('oculto');
-                }
-            })
-            .catch(() => {});
 
         document.getElementById('form-buscar').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -1157,39 +1131,29 @@
             resultados.innerHTML = '';
             mensajeBusqueda.style.display = 'none';
 
-            const parametros = new URLSearchParams(new FormData(e.target)).toString();
+            const filtros = Object.fromEntries(new FormData(e.target).entries());
+            const publicaciones = publicacionesDemo.filter(pub => {
+                const coincideTexto = (valor, filtro) => !filtro || String(valor).toLowerCase().includes(String(filtro).toLowerCase());
+                const coincideNumero = (valor, minimo, maximo) => (!minimo || valor >= Number(minimo)) && (!maximo || valor <= Number(maximo));
+                return coincideTexto(pub.ubicacion, filtros.ubicacion) && coincideTexto(pub.raza, filtros.raza) &&
+                    coincideTexto(pub.genero, filtros.genero) && coincideNumero(pub.precio, filtros.precio_min, filtros.precio_max) &&
+                    coincideNumero(pub.edad, filtros.edad_min, filtros.edad_max);
+            });
 
-            fetch('buscar.php?' + parametros)
-                .then(res => res.json())
-                .then(data => {
-                    const publicaciones = Array.isArray(data.publicaciones) ? data.publicaciones : [];
+            if (publicaciones.length > 0) {
+                hayResultados = true;
+                publicaciones.forEach(pub => crearTarjetaGanado(pub, 'resultados-busqueda', false));
+            } else {
+                mensajeBusqueda.textContent = 'No se encontraron resultados con esas características.';
+                mensajeBusqueda.style.display = 'block';
+            }
 
-                    if (data.exito && publicaciones.length > 0) {
-                        hayResultados = true;
-                        publicaciones.forEach(pub => crearTarjetaGanado(pub, 'resultados-busqueda', false));
-                    } else {
-                        mensajeBusqueda.textContent = 'No se encontraron resultados con esas características.';
-                        mensajeBusqueda.style.display = 'block';
-                    }
-                })
-                .catch(() => {
-                    mensajeBusqueda.textContent = 'No se pudo conectar con el servidor.';
-                    mensajeBusqueda.style.display = 'block';
-                })
-                .finally(() => {
-                    if (hayResultados) {
-                        dropdownBuscar.classList.remove('activo');
-                        abrirBuscar.classList.remove('activo');
-                        seccionResultados.classList.remove('oculto');
-                        window.scrollTo({
-                            top: Math.max(seccionResultados.offsetTop - 70, 0),
-                            behavior: 'smooth'
-                        });
-                    } else {
-                        dropdownBuscar.classList.add('activo');
-                        abrirBuscar.classList.add('activo');
-                    }
-                });
+            if (hayResultados) {
+                dropdownBuscar.classList.remove('activo');
+                abrirBuscar.classList.remove('activo');
+                seccionResultados.classList.remove('oculto');
+                window.scrollTo({top: Math.max(seccionResultados.offsetTop - 70, 0), behavior: 'smooth'});
+            }
         });
     </script>
 
