@@ -170,13 +170,9 @@
 
         .imagenes{
             display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(300px, 340px));
-            gap:25px;
-            justify-content:start;
-        }
-
-        .imagenes:has(.mensaje-vacio){
-            display:block;
+            grid-template-columns:repeat(4, minmax(0, 1fr));
+            gap:18px;
+            width:100%;
         }
 
         .card{
@@ -209,13 +205,13 @@
         }
 
         .card h4{
-            font-size:24px;
+            font-size:20px;
             color:#ffd37a;
-            padding:18px 18px 6px;
+            padding:14px 14px 5px;
         }
 
         .card p{
-            padding:0 18px 8px;
+            padding:0 14px 7px;
             color:#f3f3f3;
         }
 
@@ -664,8 +660,18 @@
             }
 
             .imagenes{
-                grid-template-columns:minmax(0, 1fr);
-                gap:18px;
+                grid-template-columns:repeat(3, minmax(0, 1fr));
+                gap:10px;
+            }
+
+            .card h4{
+                font-size:16px;
+                padding:10px 8px 4px;
+            }
+
+            .card p{
+                padding:0 8px 5px;
+                font-size:12px;
             }
 
             nav{
@@ -853,7 +859,7 @@
             <div>
                 <a class="enlace-perfil" id="enlace-perfil" href="perfil.html?id=1" title="Ver perfil de muestra" aria-label="Ver perfil de muestra">&#128100;</a>
                 <button class="btn-registro oculto" id="abrir-registro" type="button">Registrarse</button>
-                <button class="btn-registro btn-login oculto" id="abrir-login" type="button">Iniciar sesión</button>
+                <button class="btn-registro btn-login" id="abrir-login" type="button">Iniciar sesión</button>
                 <a class="btn-registro oculto" id="cerrar-sesion" href="cerrar_sesion.php">Cerrar sesión</a>
             </div>
         </div>
@@ -1112,7 +1118,7 @@
             mensaje.style.display = hayTarjetas ? 'none' : 'block';
         }
 
-        publicacionesDemo.forEach(pub => crearTarjetaGanado(pub, 'lista-ganado', false));
+        publicacionesDemo.filter(pub => !pub.vendido).forEach(pub => crearTarjetaGanado(pub, 'lista-ganado', false));
         actualizarMensajeVacio();
 
         if (window.location.hash === '#registro') {
@@ -1132,13 +1138,13 @@
             mensajeBusqueda.style.display = 'none';
 
             const filtros = Object.fromEntries(new FormData(e.target).entries());
-            const publicaciones = publicacionesDemo.filter(pub => {
+            const publicaciones = publicacionesDemo.filter(pub => !pub.vendido && (() => {
                 const coincideTexto = (valor, filtro) => !filtro || String(valor).toLowerCase().includes(String(filtro).toLowerCase());
                 const coincideNumero = (valor, minimo, maximo) => (!minimo || valor >= Number(minimo)) && (!maximo || valor <= Number(maximo));
                 return coincideTexto(pub.ubicacion, filtros.ubicacion) && coincideTexto(pub.raza, filtros.raza) &&
                     coincideTexto(pub.genero, filtros.genero) && coincideNumero(pub.precio, filtros.precio_min, filtros.precio_max) &&
                     coincideNumero(pub.edad, filtros.edad_min, filtros.edad_max);
-            });
+            })());
 
             if (publicaciones.length > 0) {
                 hayResultados = true;
