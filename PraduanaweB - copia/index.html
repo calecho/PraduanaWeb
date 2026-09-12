@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="es/us">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRADUANA - Mercado Ganadero</title>
+    <style>
+        html{
+            scroll-behavior:smooth;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body{
+            color:#ffffff;
+            line-height:1.6;
+            background:#111;
+        }
+
+        .contenedor{
+            width:1200px;
+            max-width:92%;
+            margin:auto;
+        }
+
+        header{
+            background:linear-gradient(90deg, #8b1e14, #d94a2b, #f5b942);
+            text-align:center;
+            padding:25px 0 15px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .contenedor-logo{
+            margin-bottom:10px;
+        }
+
+        .logo{
+            width:150px;
+            height:150px;
+            border-radius:50%;
+            object-fit:cover;
+            border:5px solid #ffffff;
+            box-shadow:0 0 18px rgba(255,255,255,0.35);
+            background:#fff;
+        }
+
+        header h1{
+            font-size:48px;
+            letter-spacing:2px;
+            color:#ffffff;
+            text-shadow:2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+
+        header h2{
+            font-size:22px;
+            font-weight:400;
+            color:#fff7e8;
+            margin-top:5px;
+        }
+
+        nav{
+            background:rgba(0,0,0,0.75);
+            position:sticky;
+            top:0;
+            z-index:100;
+            backdrop-filter:blur(6px);
+        }
+
+        nav ul{
+            display:flex;
+            justify-content:center;
+            list-style:none;
+            flex-wrap:wrap;
+        }
+
+        nav ul li{
+            margin:0 8px;
+        }
+
+        nav ul li a{
+            display:block;
+            padding:18px 20px;
+            color:#ffffff;
+            text-decoration:none;
+            font-weight:600;
+            transition:.3s;
+        }
+
+        nav ul li a:hover{
+            background:#f5b942;
+            color:#1a1a1a;
+            border-radius:6px;
+        }
+
+        .fondo-principal{
+            background:
+                linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)),
+                url('imagen-fondo.avif');
+            background-size:cover;
+            background-position:center;
+            background-attachment:fixed;
+            min-height:100vh;
+        }
+
+        .hero{
+            text-align:center;
+            padding:90px 0 70px;
+        }
+
+        .hero h2{
+            font-size:42px;
+            margin-bottom:20px;
+            color:#ffffff;
+            text-shadow:2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .hero p{
+            max-width:820px;
+            margin:auto;
+            font-size:19px;
+            color:#f2f2f2;
+        }
+
+        .botones{
+            margin-top:35px;
+        }
+
+        .btn{
+            display:inline-block;
+            padding:14px 28px;
+            border-radius:30px;
+            text-decoration:none;
+            font-weight:700;
+            margin:10px;
+            transition:.3s;
+        }
+
+        .btn-principal{
+            background:linear-gradient(135deg, #d94a2b, #f5b942);
+            color:#fff;
+        }
+
+        .btn-secundario{
+            background:#ffffff;
+            color:#8b1e14;
+        }
+
+        .btn:hover{
+            transform:translateY(-3px) scale(1.03);
+            box-shadow:0 8px 18px rgba(0,0,0,0.35);
+        }
+
+        .contenido-principal{
+            padding:40px 0 80px;
+        }
+
+        .contenido-principal h3{
+            text-align:center;
+            font-size:34px;
+            margin-bottom:35px;
+            color:#ffffff;
+        }
+
+        .imagenes{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(300px, 340px));
+            gap:25px;
+            justify-content:start;
+        }
+
+        .card{
+            background:rgba(255,255,255,0.12);
+            border:1px solid rgba(255,255,255,0.18);
+            border-radius:18px;
+            overflow:hidden;
+            backdrop-filter:blur(10px);
+            transition:.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-6px);
+            box-shadow:0 14px 28px rgba(0,0,0,0.35);
+        }
+
+        .card img{
+            width:100%;
+            aspect-ratio:4 / 3;
+            height:auto;
+            object-fit:cover;
+            object-position:center 78%;
+            display:block;
+            background:#151515;
+            transition:transform .45s ease;
+        }
+
+        .card:hover img{
+            transform:scale(1.04);
+        }
+
+        .card h4{
+            font-size:24px;
+            color:#ffd37a;
+            padding:18px 18px 6px;
+        }
+
+        .card p{
+            padding:0 18px 8px;
+            color:#f3f3f3;
+        }
+
+        .card .card-descripcion{
+            color:#d8d8d8;
+            font-size:14px;
+            padding-bottom:18px;
+        }
+
+        .card .estado-disponible{
+            color:#7ee2a8;
+            font-weight:700;
+        }
+
+        .card h4,
+        .card p{
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:normal;
+            overflow-wrap:anywhere;
+            display:-webkit-box;
+            -webkit-box-orient:vertical;
+            line-clamp:2;
+            -webkit-line-clamp:2;
+        }
+
+        .card h4{
+            line-height:1.2;
+            min-height:58px;
+        }
+
+        .card .card-descripcion{
+            line-clamp:3;
+            -webkit-line-clamp:3;
+            min-height:64px;
+        }
+
+        footer{
+            background:#0f0f0f;
+            text-align:center;
+            padding:28px 0;
+            border-top:3px solid #f5b942;
+        }
+
+        footer p{
+            color:#ddd;
+            margin:4px 0;
+        }
+
+        .btn-registro{
+            background:#ffffff;
+            color:#8b1e14;
+            padding:10px 22px;
+            border-radius:30px;
+            font-weight:700;
+            text-decoration:none;
+            border:none;
+            cursor:pointer;
+            font-size:15px;
+            transition:.3s;
+            margin:10px 0;
+        }
+
+        .btn-login{
+            background:#f5b942;
+            color:#1a1a1a;
+            margin-left:8px;
+        }
+
+        .enlace-perfil{
+            display:inline-grid;
+            place-items:center;
+            width:34px;
+            height:34px;
+            color:#fff;
+            text-decoration:none;
+            font-size:18px;
+            line-height:1;
+            border:2px solid rgba(255,255,255,0.8);
+            border-radius:50%;
+            margin:0 8px;
+            transition:.3s;
+        }
+
+        .enlace-perfil:hover{
+            background:#f5b942;
+            border-color:#f5b942;
+            transform:scale(1.08);
+        }
+
+        .btn-registro:hover{
+            transform:translateY(-2px);
+            box-shadow:0 6px 14px rgba(0,0,0,0.3);
+        }
+
+        nav .contenedor{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            flex-wrap:wrap;
+        }
+
+        .nav-izquierda{
+            flex:0 0 auto;
+            position:relative;
+        }
+
+        .nav-central{
+            flex:1;
+        }
+
+        .btn-buscar-nav{
+            display:block;
+            padding:18px 20px;
+            background:none;
+            border:none;
+            color:#ffffff;
+            font-weight:600;
+            font-size:16px;
+            cursor:pointer;
+            font-family:inherit;
+            transition:.3s;
+        }
+
+        .btn-buscar-nav:hover, .btn-buscar-nav.activo{
+            background:#f5b942;
+            color:#1a1a1a;
+            border-radius:6px;
+        }
+
+        .dropdown-buscar{
+            display:none;
+            position:absolute;
+            top:100%;
+            left:0;
+            background:#1a1a1a;
+            border:1px solid rgba(255,255,255,0.15);
+            border-radius:14px;
+            padding:22px;
+            width:300px;
+            box-shadow:0 20px 50px rgba(0,0,0,0.5);
+            z-index:150;
+        }
+
+        .dropdown-buscar.activo{
+            display:block;
+        }
+
+        .dropdown-buscar form{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        .dropdown-buscar input,
+        .dropdown-buscar select{
+            padding:10px 12px;
+            border-radius:8px;
+            border:1px solid rgba(255,255,255,0.25);
+            background:rgba(255,255,255,0.08);
+            color:#fff;
+            font-size:14px;
+            width:100%;
+        }
+
+        .dropdown-buscar input::placeholder{
+            color:#d8d8d8;
+        }
+
+        .dropdown-buscar select option{
+            background:#1a1a1a;
+        }
+
+        .dropdown-buscar .fila-doble{
+            display:flex;
+            gap:8px;
+        }
+
+        .dropdown-buscar p{
+            font-size:13px;
+            color:#bbb;
+            margin-bottom:4px;
+        }
+
+        .mensaje-busqueda{
+            display:none;
+            margin:4px 0 0;
+            color:#ffd37a !important;
+            font-size:14px !important;
+            line-height:1.4;
+        }
+
+        .card-link{
+            text-decoration:none;
+            color:inherit;
+            display:block;
+        }
+
+        .mensaje-vacio{
+            grid-column:1 / -1;
+            text-align:center;
+            color:#cfcfcf;
+            font-size:18px;
+            padding:30px 0;
+        }
+
+        .buscar-form{
+            padding:60px 0;
+        }
+
+        .buscar-form h3{
+            margin-bottom:0;
+        }
+
+        .buscar-form.oculto{
+            display:none;
+        }
+
+        .publicar-form, .contacto-info, .quienes-somos{
+            padding:60px 0;
+        }
+
+        .quienes-somos p, .contacto-info p{
+            max-width:820px;
+            margin:auto;
+            font-size:17px;
+            color:#f2f2f2;
+        }
+
+        .contacto-redes{
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:center;
+            gap:18px;
+            margin-top:35px;
+        }
+
+        .red-social{
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+            padding:14px 26px;
+            border-radius:30px;
+            text-decoration:none;
+            font-weight:700;
+            color:#fff;
+            transition:.3s;
+        }
+
+        .red-social:hover{
+            transform:translateY(-3px) scale(1.03);
+            box-shadow:0 8px 18px rgba(0,0,0,0.35);
+        }
+
+        .red-social.instagram{
+            background:linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+        }
+
+        .red-social.facebook{
+            background:#1877f2;
+        }
+
+        .red-social.gmail{
+            background:linear-gradient(135deg, #ea4335, #fbbc05);
+            color:#1a1a1a;
+        }
+
+        .red-social.telefono{
+            background:#25D366;
+            color:#8b1e14;
+        }
+
+        .publicar-form form{
+            max-width:500px;
+            margin:30px auto 0;
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        .publicar-form input,
+        .publicar-form textarea,
+        .publicar-form select,
+        .modal-registro input{
+            padding:12px 14px;
+            border-radius:8px;
+            border:1px solid rgba(255,255,255,0.25);
+            background:rgba(255,255,255,0.08);
+            color:#fff;
+            font-size:15px;
+        }
+
+        .publicar-form select option{
+            background:#1a1a1a;
+        }
+
+        .publicar-form input::placeholder,
+        .publicar-form textarea::placeholder,
+        .modal-registro input::placeholder{
+            color:#d8d8d8;
+        }
+
+        .campo-imagenes{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+            color:#ffffff;
+        }
+
+        .campo-imagenes small,
+        .archivos-seleccionados{
+            color:#d8d8d8;
+            font-size:14px;
+        }
+
+        .lista-imagenes{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+
+        .modal-overlay{
+            display:none;
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.7);
+            z-index:200;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .modal-overlay.activo{
+            display:flex;
+        }
+
+        .modal-registro{
+            background:#1a1a1a;
+            border:1px solid rgba(255,255,255,0.15);
+            border-radius:16px;
+            padding:35px 30px;
+            width:400px;
+            max-width:90%;
+            position:relative;
+            box-shadow:0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .modal-login{
+            background:#1a1a1a;
+            border:1px solid rgba(255,255,255,0.15);
+            border-radius:16px;
+            padding:35px 30px;
+            width:400px;
+            max-width:90%;
+            position:relative;
+            box-shadow:0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .modal-login h3{
+            margin-bottom:20px;
+            color:#ffd37a;
+            text-align:center;
+        }
+
+        .modal-login form{
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        .modal-registro h3{
+            margin-bottom:20px;
+            color:#ffd37a;
+            text-align:center;
+        }
+
+        .modal-registro form{
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        .modal-cerrar{
+            position:absolute;
+            top:12px;
+            right:16px;
+            background:none;
+            border:none;
+            color:#fff;
+            font-size:22px;
+            cursor:pointer;
+        }
+
+        .mensaje-envio{
+            text-align:center;
+            margin-top:15px;
+            color:#ffd37a;
+            font-weight:600;
+            display:none;
+        }
+
+        .oculto{
+            display:none;
+        }
+
+        @media (max-width:768px){
+
+            header h1{
+                font-size:36px;
+            }
+
+            header h2{
+                font-size:18px;
+            }
+
+            .logo{
+                width:120px;
+                height:120px;
+            }
+
+            .hero{
+                padding:70px 0 50px;
+            }
+
+            .hero h2{
+                font-size:30px;
+            }
+
+            .hero p{
+                font-size:17px;
+            }
+
+            nav ul{
+                flex-direction:column;
+                align-items:center;
+            }
+
+            nav ul li{
+                width:100%;
+                text-align:center;
+            }
+
+            nav ul li a{
+                width:100%;
+            }
+
+            nav .contenedor{
+                flex-direction:column;
+            }
+
+            .nav-central, .nav-izquierda{
+                width:100%;
+            }
+
+            .btn-buscar-nav{
+                width:100%;
+                text-align:center;
+            }
+
+            .dropdown-buscar{
+                position:static;
+                width:100%;
+                margin-top:10px;
+            }
+
+            .btn-registro{
+                order:-1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="inicio">
+        <div class="contenedor">
+            <div class="contenedor-logo">
+                <img src="logo-praduana.png.png" alt="Logo de PRADUANA" class="logo">
+            </div>
+
+            <h1>PRADUANA</h1>
+            <h2>Tu mercado ganadero a un clic</h2>
+        </div>
+    </header>
+
+    <nav>
+        <div class="contenedor">
+            <div class="nav-izquierda">
+                <button class="btn-buscar-nav" id="abrir-buscar" type="button">Buscar ganado ▾</button>
+
+                <div class="dropdown-buscar" id="dropdown-buscar">
+                    <form id="form-buscar">
+                        <p>Llena solo los campos que quieras usar como filtro.</p>
+                        <input type="text" name="ubicacion" placeholder="Ubicación">
+                        <input type="text" name="raza" placeholder="Raza">
+                        <select name="genero">
+                            <option value="">Género (cualquiera)</option>
+                            <option value="Macho">Macho</option>
+                            <option value="Hembra">Hembra</option>
+                        </select>
+                        <div class="fila-doble">
+                            <input type="number" name="precio_min" placeholder="Precio mín." min="0">
+                            <input type="number" name="precio_max" placeholder="Precio máx." min="0">
+                        </div>
+                        <div class="fila-doble">
+                            <input type="number" name="edad_min" placeholder="Edad mín. (meses)" min="0">
+                            <input type="number" name="edad_max" placeholder="Edad máx. (meses)" min="0">
+                        </div>
+                        <button type="submit" class="btn btn-principal">Buscar</button>
+                        <p class="mensaje-busqueda" id="mensaje-busqueda"></p>
+                    </form>
+                </div>
+            </div>
+
+            <ul class="nav-central">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#quienes-somos">Quiénes somos</a></li>
+                <li><a href="#ganado">Ganado</a></li>
+                <li><a href="publicar_form.php">Publicar</a></li>
+                <li><a href="#contacto">Contáctanos</a></li>
+            </ul>
+            <div>
+                <a class="enlace-perfil oculto" id="enlace-perfil" href="perfil.php" title="Ver mi perfil" aria-label="Ver mi perfil">&#128100;</a>
+                <button class="btn-registro" id="abrir-registro" type="button">Registrarse</button>
+                <button class="btn-registro btn-login" id="abrir-login" type="button">Iniciar sesión</button>
+                <a class="btn-registro oculto" id="cerrar-sesion" href="cerrar_sesion.php">Cerrar sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="fondo-principal">
+        <section class="hero contenedor">
+            <h2>Compra y vende ganado de forma rápida, segura y moderna</h2>
+
+            <p>
+                PRADUANA conecta ganaderos y compradores en una sola plataforma,
+                facilitando negocios transparentes, ágiles y sin intermediarios innecesarios.
+            </p>
+
+            <div class="botones">
+                <a href="#ganado" class="btn btn-principal">Ver ganado</a>
+                <a href="publicar_form.php" class="btn btn-secundario">Publicar ganado</a>
+            </div>
+        </section>
+
+        <section id="quienes-somos" class="contenedor quienes-somos">
+            <h3 style="text-align:center; font-size:34px; margin-bottom:20px;">Quiénes somos</h3>
+            <p>
+                PRADUANA es una plataforma digital que conecta ganaderos y compradores de todo el país,
+                ofreciendo un espacio confiable y moderno para negociar ganado de forma directa y transparente.
+            </p>
+        </section>
+
+        <section id="buscar" class="contenedor buscar-form oculto">
+            <h3 style="text-align:center; font-size:34px;">Resultados de tu búsqueda</h3>
+            <div class="imagenes" id="resultados-busqueda" style="margin-top:30px;"></div>
+        </section>
+
+        <section id="ganado" class="contenedor contenido-principal">
+            <h3>Ganado disponible</h3>
+
+            <div class="imagenes" id="lista-ganado">
+                <p class="mensaje-vacio" id="mensaje-vacio-ganado">Aún no hay publicaciones.</p>
+            </div>
+        </section>
+
+        <section id="contacto" class="contenedor contacto-info">
+            <h3 style="text-align:center; font-size:34px; margin-bottom:20px;">Contáctanos</h3>
+            <p style="text-align:center;">
+                Síguenos y escríbenos por el medio que prefieras. Estamos disponibles de lunes a sábado.
+            </p>
+
+            <div class="contacto-redes">
+                <a href="https://www.instagram.com/praduanaapp/" target="_blank" class="red-social instagram">Instagram</a>
+                <a href="https://www.facebook.com/profile.php?id=61593623849676&locale=es_LA" target="_blank" class="red-social facebook">Facebook</a>
+                <a href="praduanaapp@gmail.com" class="red-social gmail">Gmail</a>
+                <a href="[https://wa.me/573001234567](https://wa.me/573001234567)" class="red-social telefono">+57 321 258 5926</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="contenedor">
+            <p>© 2026 PRADUANA - Mercado Ganadero Digital</p>
+            <p>Conectamos el campo con nuevas oportunidades</p>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="modal-registro">
+        <div class="modal-registro">
+            <button class="modal-cerrar" id="cerrar-registro" type="button">&times;</button>
+            <h3>Crear cuenta en PRADUANA</h3>
+            <form id="form-registro">
+                <input type="text" name="nombre" placeholder="Nombre completo" required>
+                <input type="email" name="correo" placeholder="Correo electrónico" required>
+                <input type="password" name="contrasena" placeholder="Contraseña" required minlength="6">
+                <button type="submit" class="btn btn-principal">Registrarme</button>
+            </form>
+            <p class="mensaje-envio" id="mensaje-registro">¡Registro exitoso!</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-login">
+        <div class="modal-login">
+            <button class="modal-cerrar" id="cerrar-login" type="button">&times;</button>
+            <h3>Iniciar sesión</h3>
+            <form id="form-login">
+                <input type="email" name="correo" placeholder="Correo electrónico" required>
+                <input type="password" name="contrasena" placeholder="Contraseña" required>
+                <button type="submit" class="btn btn-principal">Entrar</button>
+            </form>
+            <p class="mensaje-envio" id="mensaje-login"></p>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('modal-registro');
+        const abrirRegistro = document.getElementById('abrir-registro');
+        const cerrarRegistro = document.getElementById('cerrar-registro');
+        const modalLogin = document.getElementById('modal-login');
+        const abrirLogin = document.getElementById('abrir-login');
+        const cerrarLogin = document.getElementById('cerrar-login');
+        const cerrarSesion = document.getElementById('cerrar-sesion');
+        const abrirBuscar = document.getElementById('abrir-buscar');
+        const dropdownBuscar = document.getElementById('dropdown-buscar');
+
+        abrirRegistro.addEventListener('click', () => {
+            modal.classList.add('activo');
+        });
+
+        abrirLogin.addEventListener('click', () => {
+            modalLogin.classList.add('activo');
+        });
+
+        cerrarRegistro.addEventListener('click', () => {
+            modal.classList.remove('activo');
+        });
+
+        cerrarLogin.addEventListener('click', () => {
+            modalLogin.classList.remove('activo');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('activo');
+            }
+        });
+
+        modalLogin.addEventListener('click', (e) => {
+            if (e.target === modalLogin) {
+                modalLogin.classList.remove('activo');
+            }
+        });
+
+        abrirBuscar.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownBuscar.classList.toggle('activo');
+            abrirBuscar.classList.toggle('activo');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!dropdownBuscar.contains(e.target) && e.target !== abrirBuscar) {
+                dropdownBuscar.classList.remove('activo');
+                abrirBuscar.classList.remove('activo');
+            }
+        });
+
+        dropdownBuscar.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        document.getElementById('form-registro').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const mensaje = document.getElementById('mensaje-registro');
+            const datos = new FormData(form);
+
+            fetch('registro.php', {
+                method: 'POST',
+                body: datos
+            })
+            .then(res => res.json())
+            .then(data => {
+                mensaje.textContent = data.mensaje;
+                mensaje.style.color = data.exito ? '#ffd37a' : '#ff8b8b';
+                mensaje.style.display = 'block';
+
+                if (data.exito) {
+                    form.reset();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1800);
+                }
+            })
+            .catch(() => {
+                mensaje.textContent = 'No se pudo conectar con el servidor.';
+                mensaje.style.color = '#ff8b8b';
+                mensaje.style.display = 'block';
+            });
+        });
+
+        document.getElementById('form-login').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const mensaje = document.getElementById('mensaje-login');
+
+            fetch('login.php', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    mensaje.textContent = data.mensaje;
+                    mensaje.style.color = data.exito ? '#ffd37a' : '#ff8b8b';
+                    mensaje.style.display = 'block';
+
+                    if (data.exito) {
+                        setTimeout(() => window.location.reload(), 700);
+                    }
+                })
+                .catch(() => {
+                    mensaje.textContent = 'No se pudo conectar con el servidor.';
+                    mensaje.style.color = '#ff8b8b';
+                    mensaje.style.display = 'block';
+                });
+        });
+
+        function textoCorto(valor) {
+            const texto = String(valor ?? '');
+            return texto.length > 30 ? texto.slice(0, 30) + '...' : texto;
+        }
+
+        function crearTarjetaGanado(pub, contenedorId, alPrincipio) {
+            const enlace = document.createElement('a');
+            enlace.href = 'publicacion.php?id=' + encodeURIComponent(pub.id);
+            enlace.target = '_blank';
+            enlace.className = 'card-link';
+
+            enlace.innerHTML = `
+                <div class="card">
+                    <img src="${pub.imagen}" alt="${pub.nombre}">
+                    <h4>${textoCorto(pub.nombre)}</h4>
+                    <p>${textoCorto(pub.peso + ' kg • ' + pub.ubicacion)}</p>
+                    <p>${textoCorto(pub.raza + ' • ' + pub.genero + ' • ' + pub.edad + ' meses')}</p>
+                    <p>$${Number(pub.precio).toLocaleString('es-CO')} COP</p>
+                    <p class="estado-disponible">✓ Disponible</p>
+                    <p>Publicado por: ${textoCorto(pub.usuario_nombre || 'Usuario')}</p>
+                    <p class="card-descripcion">${textoCorto(pub.descripcion || 'Sin descripción')}</p>
+                </div>
+            `;
+
+            const contenedor = document.getElementById(contenedorId);
+            if (alPrincipio) {
+                contenedor.prepend(enlace);
+            } else {
+                contenedor.appendChild(enlace);
+            }
+        }
+
+        function actualizarMensajeVacio() {
+            const lista = document.getElementById('lista-ganado');
+            const mensaje = document.getElementById('mensaje-vacio-ganado');
+            const hayTarjetas = lista.querySelector('.card-link') !== null;
+            mensaje.style.display = hayTarjetas ? 'none' : 'block';
+        }
+
+        function cargarPublicaciones() {
+            fetch('listar_publicaciones.php')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.exito) {
+                        data.publicaciones.forEach(pub => crearTarjetaGanado(pub, 'lista-ganado', false));
+                    }
+                    actualizarMensajeVacio();
+                })
+                .catch(() => {
+                    console.warn('No se pudieron cargar las publicaciones guardadas.');
+                });
+        }
+
+        cargarPublicaciones();
+
+        if (window.location.hash === '#registro') {
+            modal.classList.add('activo');
+        }
+
+        const enlacePerfil = document.getElementById('enlace-perfil');
+        fetch('sesion.php')
+            .then(res => res.json())
+            .then(data => {
+                if (data.autenticado) {
+                    enlacePerfil.href = 'perfil.php?id=' + encodeURIComponent(data.usuario.id);
+                    enlacePerfil.title = 'Ver mi perfil';
+                    enlacePerfil.classList.remove('oculto');
+                    abrirRegistro.classList.add('oculto');
+                    abrirLogin.classList.add('oculto');
+                    cerrarSesion.classList.remove('oculto');
+                }
+            })
+            .catch(() => {});
+
+        document.getElementById('form-buscar').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const seccionResultados = document.getElementById('buscar');
+            const resultados = document.getElementById('resultados-busqueda');
+            const mensajeBusqueda = document.getElementById('mensaje-busqueda');
+            let hayResultados = false;
+            resultados.innerHTML = '';
+            mensajeBusqueda.style.display = 'none';
+
+            const parametros = new URLSearchParams(new FormData(e.target)).toString();
+
+            fetch('buscar.php?' + parametros)
+                .then(res => res.json())
+                .then(data => {
+                    const publicaciones = Array.isArray(data.publicaciones) ? data.publicaciones : [];
+
+                    if (data.exito && publicaciones.length > 0) {
+                        hayResultados = true;
+                        publicaciones.forEach(pub => crearTarjetaGanado(pub, 'resultados-busqueda', false));
+                    } else {
+                        mensajeBusqueda.textContent = 'No se encontraron resultados con esas características.';
+                        mensajeBusqueda.style.display = 'block';
+                    }
+                })
+                .catch(() => {
+                    mensajeBusqueda.textContent = 'No se pudo conectar con el servidor.';
+                    mensajeBusqueda.style.display = 'block';
+                })
+                .finally(() => {
+                    if (hayResultados) {
+                        dropdownBuscar.classList.remove('activo');
+                        abrirBuscar.classList.remove('activo');
+                        seccionResultados.classList.remove('oculto');
+                        window.scrollTo({
+                            top: Math.max(seccionResultados.offsetTop - 70, 0),
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        dropdownBuscar.classList.add('activo');
+                        abrirBuscar.classList.add('activo');
+                    }
+                });
+        });
+    </script>
+
+</body>
+</html>
