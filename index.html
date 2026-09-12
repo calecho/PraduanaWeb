@@ -643,37 +643,66 @@
                 font-size:17px;
             }
 
-            nav ul{
-                flex-direction:column;
-                align-items:center;
+            .imagenes{
+                grid-template-columns:minmax(0, 1fr);
+                gap:18px;
             }
 
-            nav ul li{
-                width:100%;
-                text-align:center;
-            }
-
-            nav ul li a{
-                width:100%;
+            nav{
+                overflow-x:auto;
             }
 
             nav .contenedor{
-                flex-direction:column;
+                width:max-content;
+                max-width:none;
+                min-width:max-content;
+                margin:0;
+                padding:0 8px;
+                flex-wrap:nowrap;
+                justify-content:flex-start;
             }
 
-            .nav-central, .nav-izquierda{
-                width:100%;
+            .nav-izquierda,
+            .nav-central,
+            nav .contenedor > div:last-child{
+                flex:none;
+                width:auto;
             }
 
+            nav ul{
+                flex-wrap:nowrap;
+            }
+
+            nav ul li{
+                width:auto;
+                margin:0 2px;
+            }
+
+            nav ul li a,
             .btn-buscar-nav{
-                width:100%;
-                text-align:center;
+                width:auto;
+                padding:14px 12px;
+                white-space:nowrap;
+                font-size:14px;
+            }
+
+            nav .contenedor > div:last-child{
+                display:flex;
+                align-items:center;
+                white-space:nowrap;
+            }
+
+            .btn-registro{
+                padding:8px 14px;
+                font-size:13px;
             }
 
             .dropdown-buscar{
-                position:static;
-                width:100%;
-                margin-top:10px;
+                position:fixed;
+                top:58px;
+                left:8px;
+                width:min(300px, calc(100vw - 16px));
+                margin-top:0;
             }
 
             .btn-registro{
@@ -786,8 +815,8 @@
             <div class="contacto-redes">
                 <a href="https://www.instagram.com/praduanaapp/" target="_blank" class="red-social instagram">Instagram</a>
                 <a href="https://www.facebook.com/profile.php?id=61593623849676&locale=es_LA" target="_blank" class="red-social facebook">Facebook</a>
-                <a href="praduanaapp@gmail.com" class="red-social gmail">Gmail</a>
-                <a href="[https://wa.me/573001234567](https://wa.me/573001234567)" class="red-social telefono">+57 321 258 5926</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=praduanaapp@gmail.com" target="_blank" rel="noopener noreferrer" class="red-social gmail">Gmail</a>
+                <a href="https://wa.me/573212585926" target="_blank" rel="noopener noreferrer" class="red-social telefono">+57 321 258 5926</a>
             </div>
         </section>
     </main>
