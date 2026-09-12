@@ -173,9 +173,17 @@
             grid-template-columns:repeat(4, minmax(0, 1fr));
             gap:18px;
             width:100%;
+            align-items:stretch;
+        }
+
+        .card-link{
+            display:block;
+            height:100%;
+            min-width:0;
         }
 
         .card{
+            height:100%;
             background:rgba(255,255,255,0.12);
             border:1px solid rgba(255,255,255,0.18);
             border-radius:18px;
@@ -191,8 +199,7 @@
 
         .card img{
             width:100%;
-            aspect-ratio:4 / 3;
-            height:auto;
+            height:180px;
             object-fit:cover;
             object-position:center 78%;
             display:block;
@@ -662,6 +669,10 @@
             .imagenes{
                 grid-template-columns:repeat(3, minmax(0, 1fr));
                 gap:10px;
+            }
+
+            .card img{
+                height:105px;
             }
 
             .card h4{
